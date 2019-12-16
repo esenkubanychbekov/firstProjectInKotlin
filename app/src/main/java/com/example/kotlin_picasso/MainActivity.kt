@@ -2,9 +2,11 @@ package com.example.kotlin_picasso
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.view.isInvisible
 import androidx.lifecycle.ViewModelStore
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,14 +24,21 @@ class MainActivity : AppCompatActivity() {
         var next: Button = findViewById(R.id.next)
         var prev: Button = findViewById(R.id.prev)
         next.setOnClickListener {
-               loadImg(count++)
+               if (count <list.size){
+                   loadImg(count++)
+               }
+              if (count== list.size){
+                  loadLastScreen()
+              }
         }
 
         prev.setOnClickListener {
+
             loadImg(--count)
+            if (count == 0){
+                loadfirstScreen()
+            }
         }
-
-
     }
 
     private fun loadImg(i:Int){
@@ -44,6 +53,15 @@ class MainActivity : AppCompatActivity() {
         list.add("http://www.clker.com/cliparts/3/7/d/5/1197103862376117882Gioppino_Soccer_Ball.svg.med.png")
     }
 
+    fun loadLastScreen(){
+        next.visibility = View.INVISIBLE
+        prev.visibility = View.VISIBLE
+    }
 
+    private fun loadfirstScreen(){
+        prev.visibility = View.INVISIBLE
+        next.visibility = View.VISIBLE
+    }
 
 }
+
